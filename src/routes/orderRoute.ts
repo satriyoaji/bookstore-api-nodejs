@@ -7,6 +7,7 @@
 
 import express from 'express';
 import * as orderController from "../controllers/orderController";
+import {authenticateToken} from "../middlewares/authMiddleware";
 
 const router = express.Router();
 
@@ -33,7 +34,7 @@ const router = express.Router();
  *       500:
  *         description: Error creating order
  */
-router.post('', orderController.createOrder);
+router.post('', authenticateToken, orderController.createOrder);
 
 /**
  * @swagger
@@ -54,7 +55,7 @@ router.post('', orderController.createOrder);
  *       404:
  *         description: Order not found
  */
-router.delete('/:orderId', orderController.cancelOrder);
+router.delete('/:orderId', authenticateToken, orderController.cancelOrder);
 
 /**
  * @swagger
@@ -75,7 +76,7 @@ router.delete('/:orderId', orderController.cancelOrder);
  *       404:
  *         description: Customer not found
  */
-router.get('/:customerId', orderController.getOrdersByCustomerId);
+router.get('/customer', authenticateToken, orderController.getOrdersByCustomerId);
 
 /**
  * @swagger
