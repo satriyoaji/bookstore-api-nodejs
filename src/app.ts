@@ -1,9 +1,11 @@
 import express from 'express';
 import { json } from 'body-parser';
 import * as dotenv from 'dotenv';
-import * as bookController from './controller/bookController';
-import * as authController from './controller/authController';
-import * as orderController from './controller/orderController';
+import bookRoutes from "./routes/bookRoute";
+import authRoute from "./routes/authRoute";
+import orderRoute from "./routes/orderRoute";
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from '../swagger';
 
 dotenv.config();
 
@@ -12,19 +14,11 @@ const PORT = process.env.PORT || 3000;
 
 app.use(json());
 
-// Book Routes
-app.post('/books', bookController.createNewBook);
-app.get('/books', bookController.getAllBooks);
-app.get('/books/:id', bookController.getBookById);
+app.use('/books', bookRoutes);
+app.use('/auth', authRoute);
+app.use('/orders', orderRoute);
 
-// Auth Routes
-app.post('/auth', authController.auth);
-
-// Order Routes
-app.post('/orders', orderController.createOrder);
-app.delete('/orders/:orderId', orderController.cancelOrder);
-app.get('/orders/:customerId', orderController.getOrdersByCustomerId);
-app.get('/orders', orderController.getAllOrders);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

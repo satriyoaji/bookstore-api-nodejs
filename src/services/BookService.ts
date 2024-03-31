@@ -1,4 +1,4 @@
-import {createBook, getAllBooks, getBookById} from '../repository/bookRepository';
+import {createBook, getAllBooks, getBookById} from '../repositories/bookRepository';
 
 export const getAllBooksService = async () => {
   return getAllBooks();

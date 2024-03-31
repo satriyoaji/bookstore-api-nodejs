@@ -1,4 +1,4 @@
-import Book from '../entity/Book';
+import Book from '../entities/Book';
 
 export const getAllBooks = async () => {
   return Book.findAll();

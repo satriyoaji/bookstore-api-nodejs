@@ -1,4 +1,4 @@
-import Order from '../entity/Order';
+import Order from '../entities/Order';
 
 export const getAllOrders = async () => {
   return Order.findAll();

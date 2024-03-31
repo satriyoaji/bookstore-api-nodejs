@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import * as bookService from '../service/bookService';
-import {createBookService} from "../service/bookService";
+import * as bookService from '../services/bookService';
+import {createBookService} from "../services/bookService";
 
 export const getAllBooks = async (req: Request, res: Response) => {
   try {

@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import { getCustomerByUsername, createCustomer } from '../repository/customerRepository';
+import { getCustomerByUsername, createCustomer } from '../repositories/customerRepository';
 import { dbConfig } from '../config';
 
 export const auth = async (username: string, password: string) => {

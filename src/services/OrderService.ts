@@ -1,4 +1,4 @@
-import {createOrder, cancelOrder, getOrdersByCustomerId, getAllOrders} from '../repository/orderRepository';
+import {createOrder, cancelOrder, getOrdersByCustomerId, getAllOrders} from '../repositories/orderRepository';
 
 export const getAllOrdersService = async () => {
   return getAllOrders();

@@ -1,7 +1,7 @@
 // const { sequelize } = require('../src/config');
 import { sequelize } from '../src/config';
-// const Book = require('../src/entity/Book');
-import Book from "../src/entity/Book";
+// const Book = require('../src/entities/Book');
+import Book from "../src/entities/Book";
 
 // Define the book data
 const booksData = [

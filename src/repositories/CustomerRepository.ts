@@ -1,4 +1,4 @@
-import Customer from '../entity/Customer';
+import Customer from '../entities/Customer';
 
 export const createCustomer = async (username: string, password: string) => {
   return Customer.create({ username, password });
