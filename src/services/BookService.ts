@@ -1,7 +1,7 @@
 import {createBook, getAllBooks, getBookById} from '../repositories/bookRepository';
 
-export const getAllBooksService = async () => {
-  return getAllBooks();
+export const getAllBooksService = async (page: number, limit: number, name?: string) => {
+  return getAllBooks(page, limit, name);
 };
 
 export const getBookByIdService = async (id: number) => {

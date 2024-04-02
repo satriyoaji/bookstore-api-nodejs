@@ -4,7 +4,8 @@ import {createBookService} from "../services/bookService";
 
 export const getAllBooks = async (req: Request, res: Response) => {
   try {
-    const books = await bookService.getAllBooksService();
+    const { page = 1, limit = 10, name } = req.query;
+    const books = await bookService.getAllBooksService(+page, +limit, name?.toString());
     res.json(books);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
