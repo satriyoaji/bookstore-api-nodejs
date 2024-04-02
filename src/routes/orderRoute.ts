@@ -24,8 +24,6 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             properties:
- *               customerId:
- *                 type: string
  *               bookId:
  *                 type: string
  *     responses:
