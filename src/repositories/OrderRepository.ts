@@ -5,13 +5,25 @@ export const getAllOrders = async () => {
 };
 
 export const createOrder = async (customerId: number, bookId: number) => {
-  return Order.create({ customerId, bookId });
+  try {
+    return await Order.create({customerId, bookId});
+  } catch (error) {
+    throw new Error('Error creating order');
+  }
 };
 
-export const cancelOrder = async (orderId: number) => {
-  return Order.destroy({ where: { id: orderId } });
+export const deleteOrderByID = async (orderId: number) => {
+  try {
+    return Order.destroy({ where: { id: orderId } });
+  } catch (error) {
+    throw new Error('Error deleting order');
+  }
 };
 
 export const getOrdersByCustomerId = async (customerId: number) => {
   return Order.findAll({ where: { customerId } });
+};
+
+export const getOrderByID = async (id: number) => {
+  return Order.findByPk(id);
 };

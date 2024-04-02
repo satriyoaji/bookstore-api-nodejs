@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import * as orderService from '../services/orderService';
 import {CustomRequest} from "../middlewares/authMiddleware";
 import {getCustomerById} from "../repositories/CustomerRepository";
+import {cancelOrderService} from "../services/orderService";
 
 export const getAllOrders = async (req: CustomRequest, res: Response) => {
   try {
@@ -16,30 +17,31 @@ export const createOrder = async (req: CustomRequest, res: Response) => {
   try {
     const { bookId } = req.body;
     const customerId = req.customerId ? req.customerId : 0;
-    const customer = await getCustomerById(customerId);
-    if (customer?.id) {
-      await orderService.createOrderService(customer?.id, bookId);
-      res.status(201).json({ message: 'Order created successfully' });
-    }
-    res.status(403).json({ message: 'Forbidden access by invalid Customer!' });
+    const order = await orderService.createOrderService(customerId, bookId);
+    res.status(201).json(order);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    if (error.statusCode) {
+      res.status(error.statusCode).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: 'Internal server error' });
+    }
   }
 };
 
 export const cancelOrder = async (req: CustomRequest, res: Response) => {
   try {
-    const { orderId } = req.params;
     const customerId = req.customerId ? req.customerId : 0;
-    const customer = await getCustomerById(customerId);
-    if (!customer?.id) {
-      res.status(403).json({ message: 'Forbidden access by invalid Customer!' });
-    }
-    const id = parseInt(orderId);
-    await orderService.cancelOrderService(id);
-    res.json({ message: 'Order canceled successfully' });
+    const { orderId } = req.params;
+    const orderIdInt = parseInt(orderId);
+    const result = await cancelOrderService(customerId, orderIdInt);
+    res.status(200).json(result);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    if (error.statusCode) {
+      res.status(error.statusCode).json({ error: error.message });
+    } else {
+      console.error("error: ", error)
+      res.status(500).json({ error: 'Internal server error' });
+    }
   }
 };
 
@@ -53,6 +55,6 @@ export const getOrdersByCustomerId = async (req: CustomRequest, res: Response) =
     const orders = await orderService.getOrdersByCustomerIdService(customerId);
     res.json(orders);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
