@@ -6,6 +6,7 @@ import authRoute from "./routes/authRoute";
 import orderRoute from "./routes/orderRoute";
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from '../swagger';
+const cors = require('cors');
 
 dotenv.config();
 
@@ -13,6 +14,9 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(json());
+
+// Enable CORS
+app.use(cors());
 
 app.use('/books', bookRoutes);
 app.use('/auth', authRoute);
